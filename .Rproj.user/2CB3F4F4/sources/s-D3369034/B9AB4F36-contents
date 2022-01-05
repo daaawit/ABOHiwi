@@ -13,11 +13,14 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+#devtools::install_github("daaawit/ABOHiwi")
+library(ABOHiwi)
 library(tidyverse)
 library(haven)
 library(psych)
 
 wd <- dirname(rstudioapi::getSourceEditorContext()$path)
+data <- read_sav(sprintf("%s/../../220104_Teamdaten.sav", wd))
 ```
 
 # Hypothesen
@@ -36,6 +39,6 @@ Does the association between social presence and activity awareness and team com
 # Deskriptive Daten 
 
 ```{r Korrelationstabelle}
-
+check_nv("Skill1", data)
 ```
 

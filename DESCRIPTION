@@ -1,11 +1,14 @@
 Package: ABOHiwi
 Type: Package
-Title: What the Package Does (Title Case)
+Title: ABO Hiwi Funktionen
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: David Schischke
+Maintainer: David Schischke <s1ddschi@uni-trier.de>
+Description: Funktionen, die für Auswertungen von klassischen ABO-Datensätzen relevant sind.
+License: GPL3
 Encoding: UTF-8
 LazyData: true
+Imports:
+    nortest,
+    ggplot2
+RoxygenNote: 7.1.1
