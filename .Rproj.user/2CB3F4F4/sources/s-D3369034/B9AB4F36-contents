@@ -1,0 +1,41 @@
+---
+title: "EAWOP Analyse Bene"
+author: "David Schischke"
+date: "5 1 2022"
+output: 
+  html_document:
+    theme: simplex
+    toc: true
+    toc_depth: 3
+    toc_float: true    
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(haven)
+library(psych)
+
+wd <- dirname(rstudioapi::getSourceEditorContext()$path)
+```
+
+# Hypothesen
+
+1. Social Presence Awareness decreases when the interaction process among team members is automated by a software agent, but increases again when the software agent fails. (curvilinear relationship)
+
+2. Activity Awareness decreases when the interaction process among team members is automated by a software agent, but increases again when the software agent fails. (curvilinear relationship)
+
+3. Social Presence Awareness and Activity Awareness are positively associated with Team Commitment and Willingness to do additional work
+
+Exploratory Research Question:
+Does the association between social presence and activity awareness and team commitment and motivation to work harder differ depending on the degree of the automation of team interaction processes?
+
+# Datenvorbereitung
+
+# Deskriptive Daten 
+
+```{r Korrelationstabelle}
+
+```
+

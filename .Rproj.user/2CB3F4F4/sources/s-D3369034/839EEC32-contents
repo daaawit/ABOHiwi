@@ -1,0 +1,39 @@
+---
+title: ""
+author: ""
+date: ""
+output: 
+  html_document:
+    theme: simplex
+    toc: true
+    toc_depth: 3
+    toc_float: true    
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(haven)
+library(psych)
+library(DT)
+library(knitr)
+
+wd <- dirname(rstudioapi::getSourceEditorContext()$path)
+```
+
+# Hypothesen
+
+Hier die zu analysierenden Hypothesen auflisten
+
+1. H1:
+2. H2:
+...
+
+# Deskriptive Analyse
+
+# Hypothesen
+
+## H1
+
+## H2

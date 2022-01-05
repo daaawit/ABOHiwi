@@ -1,0 +1,4 @@
+name: Hiwi Analysis
+description: >
+   Eine Vorlage zur Erstellung von Analysen mit passenden Überschriften und einer generellen Formatierung. Es werden außerdem relevante Pakete geladen, sowie eine Variable "wd" erstellt, die den Pfad zum Ordner des aktuellen Skripts enthält.
+create_dir: FALSE
