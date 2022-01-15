@@ -1,3 +1,5 @@
+#' @title Generate significance signs from p values
+#'
 #' Generate a vector of significance stars for a
 #' set of p values.
 #'

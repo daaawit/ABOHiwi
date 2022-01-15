@@ -2,7 +2,9 @@
 % Please edit documentation in R/check_nv.R
 \name{check_nv}
 \alias{check_nv}
-\title{Check normal distribution of variables detecting whether there are
+\title{Plot distribution of Likert-scale type item
+
+Check normal distribution of variables detecting whether there are
 outliers present and plotting the empirical distribution.}
 \usage{
 check_nv(var, dat, outliers = FALSE, ID = NULL, plot = T)
@@ -19,6 +21,8 @@ check_nv(var, dat, outliers = FALSE, ID = NULL, plot = T)
 \item{plot}{Whether ND should be plotted}
 }
 \description{
+Plot distribution of Likert-scale type item
+
 Check normal distribution of variables detecting whether there are
 outliers present and plotting the empirical distribution.
 }

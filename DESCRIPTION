@@ -1,7 +1,7 @@
 Package: ABOHiwi
 Type: Package
 Title: ABO Hiwi Funktionen
-Version: 0.1.0
+Version: 0.1.0.1
 Author: David Schischke
 Maintainer: David Schischke <s1ddschi@uni-trier.de>
 Description: Funktionen, die für Auswertungen von klassischen ABO-Datensätzen relevant sind.
@@ -12,5 +12,5 @@ Imports:
     nortest,
     tidyverse,
     psychometric,
-    reshape
+    reshape2
 RoxygenNote: 7.1.2

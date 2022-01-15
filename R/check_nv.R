@@ -1,3 +1,5 @@
+#' @title Plot distribution of Likert-scale type item
+#'
 #' Check normal distribution of variables detecting whether there are
 #' outliers present and plotting the empirical distribution.
 #'
