@@ -3,6 +3,7 @@
 #' @import ggplot2
 #' @importFrom dplyr filter
 #' @importFrom dplyr select
+#' @importFrom dplyr arrange
 #' @importFrom dplyr relocate
 #' @importFrom reshape2 melt
 #' @importFrom psychometric CIr
@@ -13,10 +14,10 @@
 #' but allows for different values on the x and y axis. It also simplifies a lot of stuff that is annoying about the function in the
 #' psych package.
 #' 
+#' @param data The dataframe from which the data will be sampled
 #' @param x Independent variables, provided as a vector containing variable names as strings, e.g. c("iv1", "iv2", "iv3").
 #' @param y Dependent variables, optional. Also provided as a vector. If no y values are specified, the function uses the x values for both
 #' the x and y axis.
-#' @param data The dataframe from which the data will be sampled
 #' @param digits How many digits should be shown in the plot. Defaults to 3.
 #' @param digit_size How big the digits within each tile should be. Defaults to 4, but will probably need to be adjusted depending
 #' on the number of variables
@@ -41,17 +42,21 @@
 
 
 
-cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
+cor_plot <- function(data, x, y = NULL, digits = 3, digit_size = 4,
                      significance = T, sign_levels = list(".001" = "***", ".01" = "**", ".05" = "*"),
                      CI = T, conf_level = 0.95, plot_CI = T,
                      colorblind = F, return_plot = F){
 
   n <- nrow(data)
 
-  cor_data <- dplyr::select(data, x, y)
+  cor_data <- select(data, x, y)
   cor_plot_data <- melt(cor(cor_data))
-
+  
   if(!is.null(y)) cor_plot_data <- filter(cor_plot_data, Var1 %in% y & Var2 %in% x)
+  
+  # Put IVs first
+  cor_plot_data <- relocate(cor_plot_data, Var2)
+  cor_plot_data$Var2 <- factor(cor_plot_data$Var2, ordered = T)
 
   if(CI){
     # Relies on psychometric package
@@ -71,11 +76,12 @@ cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
   }
 
   # Color palette
-  if(colorblind) palette <- c(colorblind_1[4], colorblind_1[1]) else palette <- c("red", "blue")
+  if(colorblind) palette <- c(palettes$colorblind_1[4], palettes$colorblind_1[1]) else palette <- c("red", "blue")
 
   plot <- ggplot(cor_plot_data, aes(x = Var1, y = Var2, fill = value)) +
-    geom_tile() +
-    scale_fill_gradient2(low = palette[1], high = palette[2], midpoint = 0, limit = c(-1,1), name = "r") +
+    geom_tile() + 
+    scale_y_discrete(limits = rev(levels(cor_plot_data$Var2))) + 
+    scale_fill_gradient2(low = palette[1], high = palette[2], midpoint = 0, limit = c(-1,1), name = "r") + 
     theme(
       axis.title.x = element_blank(),
       axis.title.y = element_blank(),
@@ -83,7 +89,7 @@ cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
       panel.grid = element_blank(),
       panel.background = element_blank(),
       legend.title.align = 0.19, # Center legend across bar
-    )
+    ) 
 
 
   # Labels for the plot
@@ -103,12 +109,9 @@ cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
     geom_text(aes(Var1, Var2, label = labels), color = "black", size = digit_size)
 
   print(plot)
-
-  # Reorder before exporting
-  cor_plot_data <- relocate(cor_plot_data, Var2)
+  
+  # Rename before exporting
   if(!is.null(y)) colnames(cor_plot_data)[1:3] <- c("IV", "DV", "r") else colnames(cor_plot_data)[1:3] <- c("Var1", "Var2", "r")
-
-
 
   if(return_plot) return(list(cor_data = cor_plot_data, cor_plot = plot)) else return(cor_plot_data)
 }
