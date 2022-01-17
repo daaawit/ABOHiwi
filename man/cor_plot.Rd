@@ -2,13 +2,7 @@
 % Please edit documentation in R/cor_plot.R
 \name{cor_plot}
 \alias{cor_plot}
-\title{Plot correlations as a heatmap
-
-Plots correlations between multiple variables as a heatmap.
-This function fulfills a similar need to psych::cor.plot()
-but allows for different values on the x and y axis. It also
-simplifies a lot of stuff that is annoying about the function in the
-psych package.}
+\title{Plot correlations as a heatmap with significance stars and confidence intervals}
 \usage{
 cor_plot(
   x,
@@ -22,8 +16,7 @@ cor_plot(
   conf_level = 0.95,
   plot_CI = T,
   colorblind = F,
-  return_plot = F,
-  ...
+  return_plot = F
 )
 }
 \arguments{
@@ -56,7 +49,7 @@ also be provided as strings. Defaults to .001 = three stars, .01 = two stars, .0
 \item{colorblind}{Whether the colors in the plot should be modified to a colorblind palette. Defaults to FALSE. Uses colors from the palette
 colorblind_1 in this package if TRUE.}
 
-\item{return_plot:}{Whether plot should be returned as an object. If FALSE, plot will be printed
+\item{return_plot}{Whether plot should be returned as an object. If FALSE, plot will be printed
 but not saved. If TRUE, function will return a list containing the correlation table and the ggplot data as elements.}
 }
 \value{
@@ -64,11 +57,7 @@ Returns the correlation table and plots it as a heatmap. If return_plot is TRUE,
 together with the correlation table. Can be called using print(object$cor_plot)
 }
 \description{
-Plot correlations as a heatmap
-
-Plots correlations between multiple variables as a heatmap.
-This function fulfills a similar need to psych::cor.plot()
-but allows for different values on the x and y axis. It also
-simplifies a lot of stuff that is annoying about the function in the
+Plots correlations between multiple variables as a heatmap. This function fulfills a similar need to psych::cor.plot()
+but allows for different values on the x and y axis. It also simplifies a lot of stuff that is annoying about the function in the
 psych package.
 }

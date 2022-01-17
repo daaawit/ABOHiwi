@@ -1,13 +1,21 @@
-#' @title Plot distribution of Likert-scale type item
+#' Check normal distribution of Likert-scale type item
 #'
-#' Check normal distribution of variables detecting whether there are
-#' outliers present and plotting the empirical distribution.
+#' @import ggplot2
+#' @importFrom dplyr filter
+#' @importFrom dplyr pull
+#' @importFrom nortest ad.test
+#' @importFrom stats shapiro.test
+#' @importFrom stats ks.test
+#' @importFrom stats sd
 #'
 #' @param var Variable to check, supplied as a string
 #' @param dat Dataframe from which the variable stems
 #' @param outliers Whether function should return the outliers
 #' @param ID Column by which outliers should be identified
 #' @param plot Whether ND should be plotted
+#'
+#' @description Check normal distribution of variables detecting whether there are
+#' outliers present and plotting the empirical distribution.
 
 check_nv <- function(var, dat, outliers = FALSE, ID = NULL, plot = T){
   if(outliers == T){
@@ -22,7 +30,7 @@ check_nv <- function(var, dat, outliers = FALSE, ID = NULL, plot = T){
         print(paste("Found ", length(outs), " outliers"))
         print(outs)
         dat <- filter(dat, !(ID %in% outs))
-        title <- title <- sprintf("%s with outlier correction", toString(var))
+        title <- sprintf("%s with outlier correction", toString(var))
       }
     }
   } else {
@@ -31,36 +39,11 @@ check_nv <- function(var, dat, outliers = FALSE, ID = NULL, plot = T){
 
   shap <- shapiro.test(pull(dat, var))
   kgs <- ks.test(pull(dat, var), "pnorm", mean = mean(pull(dat, var = var)), sd = sd(pull(dat, var = var)))
-  ad <- nortest::ad.test(pull(dat, var))
-
+  ad <- ad.test(pull(dat, var))
 
   print(sprintf("Shapiro-Wilk for %s: W = %.4f, p = %.4f", var, shap$statistic, shap$p.value))
   print(sprintf("Kolmogorov-Smirnov for %s: D = %.4f, p = %.4f", var, kgs$statistic, kgs$p.value))
   print(sprintf("Anderson-Darling for %s: D = %.4f, p = %.4f", var, ad$statistic, ad$p.value))
 
   if (plot) plot_nv(var, dat, title)
-}
-
-check_outliers <- function(var, ID, dat){
-
-  outs <- pull(filter(dat, pull(dat, var) %in% boxplot.stats(select(dat, var))$out), ID)
-  if(length(outs != 0)){
-    print(sprintf("Removing outlier values: %s", paste(outs, collapse = " ")))
-  } else {
-    print("No outliers removed")
-  }
-  return(outs)
-}
-
-plot_nv <- function(var, dat, title = ""){
-  print(
-    ggplot(dat, aes(x = pull(dat, var = var))) +
-      geom_histogram(aes(y=..density..), binwidth = 0.5) +
-      geom_density(alpha=.2, fill = "red") +
-      geom_vline(aes(xintercept = mean(pull(dat, var = var), na.rm = T)), color = "red") + # Median = Rote Linie
-      geom_vline(aes(xintercept = median(pull(dat, var = var), na.rm = T)), color = "blue") + # MW = Blaue Linie
-      xlab("") +
-      ggtitle(title) +
-      jtools::theme_apa()
-  )
 }

@@ -5,12 +5,16 @@ Version: 0.1.0.1
 Author: David Schischke
 Maintainer: David Schischke <s1ddschi@uni-trier.de>
 Description: Funktionen, die für Auswertungen von klassischen ABO-Datensätzen relevant sind.
-License: GPL3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    ggplot2,
+    dplyr,
+    tibble,
+    stringr,
     nortest,
-    tidyverse,
     psychometric,
-    reshape2
+    reshape2,
+    jtools
 RoxygenNote: 7.1.2

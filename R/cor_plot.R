@@ -1,10 +1,13 @@
-#' @title Plot correlations as a heatmap
+#' Plot correlations as a heatmap with significance stars and confidence intervals
 #'
-#' Plots correlations between multiple variables as a heatmap.
-#' This function fulfills a similar need to psych::cor.plot()
-#' but allows for different values on the x and y axis. It also
-#' simplifies a lot of stuff that is annoying about the function in the
-#' psych package.
+#' @import ggplot2
+#' @importFrom dplyr filter
+#' @importFrom dplyr select
+#' @importFrom dplyr relocate
+#' @importFrom reshape2 melt
+#' @importFrom psychometric CIr
+#' @importFrom stats cor
+#' @importFrom stats pt
 #'
 #' @param x Independent variables, provided as a vector containing variable names as strings, e.g. c("iv1", "iv2", "iv3").
 #' @param y Dependent variables, optional. Also provided as a vector. If no y values are specified, the function uses the x values for both
@@ -24,16 +27,21 @@
 #' @param plot_CI Whether the CI should be included below the correlation within the plot.
 #' @param colorblind Whether the colors in the plot should be modified to a colorblind palette. Defaults to FALSE. Uses colors from the palette
 #' colorblind_1 in this package if TRUE.
-#' @param return_plot: Whether plot should be returned as an object. If FALSE, plot will be printed
+#' @param return_plot Whether plot should be returned as an object. If FALSE, plot will be printed
 #' but not saved. If TRUE, function will return a list containing the correlation table and the ggplot data as elements.
+
 #' @return Returns the correlation table and plots it as a heatmap. If return_plot is TRUE, also returns the ggplot object as a list element
 #' together with the correlation table. Can be called using print(object$cor_plot)
+#'
+#' @description Plots correlations between multiple variables as a heatmap. This function fulfills a similar need to psych::cor.plot()
+#' but allows for different values on the x and y axis. It also simplifies a lot of stuff that is annoying about the function in the
+#' psych package.
 
 
 cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
                      significance = T, sign_levels = list(".001" = "***", ".01" = "**", ".05" = "*"),
                      CI = T, conf_level = 0.95, plot_CI = T,
-                     colorblind = F, return_plot = F, ...){
+                     colorblind = F, return_plot = F){
 
   n <- nrow(data)
 
@@ -44,7 +52,7 @@ cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
 
   if(CI){
     # Relies on psychometric package
-    CIs <- sapply(cor_plot_data$value, function(x) psychometric::CIr(x,n, level = conf_level)) %>% t() %>% data.frame()
+    CIs <- data.frame(t(sapply(cor_plot_data$value, function(x) psychometric::CIr(x,n, level = conf_level))))
     colnames(CIs) <- c("lower", "higher")
 
     cor_plot_data <- cbind(cor_plot_data, CIs)
