@@ -8,7 +8,11 @@
 #' @importFrom psychometric CIr
 #' @importFrom stats cor
 #' @importFrom stats pt
-#'
+#' 
+#' @description Plots correlations between multiple variables as a heatmap. This function fulfills a similar need to psych::cor.plot()
+#' but allows for different values on the x and y axis. It also simplifies a lot of stuff that is annoying about the function in the
+#' psych package.
+#' 
 #' @param x Independent variables, provided as a vector containing variable names as strings, e.g. c("iv1", "iv2", "iv3").
 #' @param y Dependent variables, optional. Also provided as a vector. If no y values are specified, the function uses the x values for both
 #' the x and y axis.
@@ -29,13 +33,12 @@
 #' colorblind_1 in this package if TRUE.
 #' @param return_plot Whether plot should be returned as an object. If FALSE, plot will be printed
 #' but not saved. If TRUE, function will return a list containing the correlation table and the ggplot data as elements.
-
+#' 
 #' @return Returns the correlation table and plots it as a heatmap. If return_plot is TRUE, also returns the ggplot object as a list element
 #' together with the correlation table. Can be called using print(object$cor_plot)
 #'
-#' @description Plots correlations between multiple variables as a heatmap. This function fulfills a similar need to psych::cor.plot()
-#' but allows for different values on the x and y axis. It also simplifies a lot of stuff that is annoying about the function in the
-#' psych package.
+#' @export
+
 
 
 cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
@@ -63,7 +66,7 @@ cor_plot <- function(x, y = NULL, data, digits = 3, digit_size = 4,
     df <- n - 2
     t_val <- (cor_plot_data$value * sqrt(df)/sqrt(1 - cor_plot_data$value))
 
-    cor_plot_data$p_val <- 1 - pt(t_val, df = df)
+    cor_plot_data$p_val <- 1 - pt(abs(t_val), df = df) # Abs to make it one-directional
     cor_plot_data$sign_level <- get_significance_stars(cor_plot_data$p_val, sign_levels = sign_levels)
   }
 

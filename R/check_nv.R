@@ -7,15 +7,17 @@
 #' @importFrom stats shapiro.test
 #' @importFrom stats ks.test
 #' @importFrom stats sd
-#'
+#' 
+#' @description Check normal distribution of variables detecting whether there are
+#' outliers present and plotting the empirical distribution.
+#' 
 #' @param var Variable to check, supplied as a string
 #' @param dat Dataframe from which the variable stems
 #' @param outliers Whether function should return the outliers
 #' @param ID Column by which outliers should be identified
 #' @param plot Whether ND should be plotted
 #'
-#' @description Check normal distribution of variables detecting whether there are
-#' outliers present and plotting the empirical distribution.
+#' @export
 
 check_nv <- function(var, dat, outliers = FALSE, ID = NULL, plot = T){
   if(outliers == T){
