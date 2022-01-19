@@ -15,7 +15,7 @@
 #' @param data Dataframe from which the variable stems
 #' @param outliers Whether function should check for outliers. If true, will return outlier values.
 #' @param ID Column by which outliers should be identified. Function will return a vector consisting of the IDs of the outliers.
-#' @param exclude_outliers_in_plot Whether outliers should be removed prior to plotting the distribution of the variable.
+#' @param exclude_outliers Whether outliers should be removed prior to plotting the distribution of the variable.
 #' @param plot Whether ND should be plotted
 #' @param max_val Maximum value of the item being analyzed (optional). If not supplied, the x axis will scale automatically. If supplied,
 #' the x axis will scale between 0 and max_val. Only used for plotting.
@@ -23,7 +23,7 @@
 #'
 #' @export
 
-check_nv <- function(var, data, outliers = FALSE, ID = NULL, exclude_outliers_in_plot = FALSE, plot = TRUE, max_val = NULL, colorblind = F){
+check_nv <- function(var, data, outliers = FALSE, ID = NULL, exclude_outliers = FALSE, plot = TRUE, max_val = NULL, colorblind = F){
 
   var_vals <- as.numeric(pull(data, var = var))
 
@@ -33,13 +33,15 @@ check_nv <- function(var, data, outliers = FALSE, ID = NULL, exclude_outliers_in
     if(is.null(ID)){
       stop("No ID column supplied")
     } else {
-      outs <- check_outliers(var_vals = var_vals, ID = ID, data = data)
-      if (length(outs) != 0 && exclude_outliers_in_plot){
+      outs <- check_outliers(var_vals = pull(data, var = var), ID = ID, data = data)
+      if (length(outs) != 0 && exclude_outliers){
         data <- filter(data, !(data[[ID]] %in% outs))
         title <- sprintf("%s with outlier correction", title)
       }
     }
   }
+
+  var_vals <- as.numeric(pull(data, var = var))
 
   shap <- shapiro.test(var_vals)
   kgs <- ks.test(var_vals, "pnorm", mean = mean(var_vals), sd = sd(var_vals))
@@ -52,3 +54,5 @@ check_nv <- function(var, data, outliers = FALSE, ID = NULL, exclude_outliers_in
   if (plot) plot_dist(var, data, max_val = max_val, title = title, colorblind = colorblind)
   if (outliers) return(outs)
 }
+
+

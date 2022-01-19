@@ -8,14 +8,18 @@ cor_plot(
   data,
   x,
   y = NULL,
+  use = "complete.obs",
+  method = "pearson",
   digits = 3,
   digit_size = 4,
   significance = T,
-  sign_levels = list(`.001` = "***", `.01` = "**", `.05` = "*"),
+  sign_levels = list(`.001` = "***", `.01` = "**", `.05` = "*", `.1` = "."),
   CI = T,
   conf_level = 0.95,
   plot_CI = T,
   colorblind = F,
+  title = NULL,
+  label_rotation = 0,
   return_plot = F
 )
 }
@@ -26,6 +30,12 @@ cor_plot(
 
 \item{y}{Dependent variables, optional. Also provided as a vector. If no y values are specified, the function uses the x values for both
 the x and y axis.}
+
+\item{use}{Which values to use for the correlation. Can be any option for the `use` command of the `stats::cor` function, i.e. "everything", 
+"all.obs", "complete.obs", "na.or.complete", or "pairwise.complete.obs". Defaults to "complete.obs".}
+
+\item{method}{Which correlation method to use. Can be any option for the `method` command of the `stats::cor` function, i.e. "pearson"
+"kendall", or "spearman". Defaults to "pearson".}
 
 \item{digits}{How many digits should be shown in the plot. Defaults to 3.}
 
@@ -48,6 +58,10 @@ also be provided as strings. Defaults to .001 = three stars, .01 = two stars, .0
 
 \item{colorblind}{Whether the colors in the plot should be modified to a colorblind palette. Defaults to FALSE. Uses colors from the palette
 colorblind_1 in this package if TRUE.}
+
+\item{title}{Title that should be added to the plot. If not specified, title will be omitted.}
+
+\item{label_rotation}{How many degrees the label on the x axis (corresponds to the values specified as 'y' if y != NULL) should be rotated.}
 
 \item{return_plot}{Whether plot should be returned as an object. If FALSE, plot will be printed
 but not saved. If TRUE, function will return a list containing the correlation table and the ggplot data as elements.}

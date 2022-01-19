@@ -18,6 +18,10 @@
 #' @param x Independent variables, provided as a vector containing variable names as strings, e.g. c("iv1", "iv2", "iv3").
 #' @param y Dependent variables, optional. Also provided as a vector. If no y values are specified, the function uses the x values for both
 #' the x and y axis.
+#' @param use Which values to use for the correlation. Can be any option for the `use` command of the `stats::cor` function, i.e. "everything", 
+#' "all.obs", "complete.obs", "na.or.complete", or "pairwise.complete.obs". Defaults to "complete.obs".
+#' @param method Which correlation method to use. Can be any option for the `method` command of the `stats::cor` function, i.e. "pearson"
+#' "kendall", or "spearman". Defaults to "pearson".
 #' @param digits How many digits should be shown in the plot. Defaults to 3.
 #' @param digit_size How big the digits within each tile should be. Defaults to 4, but will probably need to be adjusted depending
 #' on the number of variables
@@ -32,6 +36,8 @@
 #' @param plot_CI Whether the CI should be included below the correlation within the plot.
 #' @param colorblind Whether the colors in the plot should be modified to a colorblind palette. Defaults to FALSE. Uses colors from the palette
 #' colorblind_1 in this package if TRUE.
+#' @param title Title that should be added to the plot. If not specified, title will be omitted.
+#' @param label_rotation How many degrees the label on the x axis (corresponds to the values specified as 'y' if y != NULL) should be rotated. 
 #' @param return_plot Whether plot should be returned as an object. If FALSE, plot will be printed
 #' but not saved. If TRUE, function will return a list containing the correlation table and the ggplot data as elements.
 #' 
@@ -42,17 +48,26 @@
 
 
 
-cor_plot <- function(data, x, y = NULL, digits = 3, digit_size = 4,
-                     significance = T, sign_levels = list(".001" = "***", ".01" = "**", ".05" = "*"),
+cor_plot <- function(data, x, y = NULL, use = "complete.obs", method = "pearson", digits = 3, digit_size = 4,
+                     significance = T, sign_levels = list(".001" = "***", ".01" = "**", ".05" = "*", ".1" = "."),
                      CI = T, conf_level = 0.95, plot_CI = T,
-                     colorblind = F, return_plot = F){
-
+                     colorblind = F, title = NULL, label_rotation = 0, return_plot = F){
+  
   n <- nrow(data)
+  
+  # I sometimes provide subsets of data frames as indeces, but this function only needs colnames. So if
+  # something other than colnames are supplied, convert them first
+  if(!is.vector(x)) x <- colnames(x)
+  if(!is.null(y) & !is.vector(y)) y <- colnames(y)
 
   cor_data <- select(data, x, y)
-  cor_plot_data <- melt(cor(cor_data))
+  cor_plot_data <- melt(cor(cor_data, use = use, method = method))
   
-  if(!is.null(y)) cor_plot_data <- filter(cor_plot_data, Var1 %in% y & Var2 %in% x)
+  if(!is.null(y)){
+    cor_plot_data <- filter(cor_plot_data, Var1 %in% y & Var2 %in% x)
+  } else {
+    cor_plot_data$value <- ifelse(cor_plot_data$Var1 == cor_plot_data$Var2, 0, cor_plot_data$value)
+  }
   
   # Put IVs first
   cor_plot_data <- relocate(cor_plot_data, Var2)
@@ -76,15 +91,17 @@ cor_plot <- function(data, x, y = NULL, digits = 3, digit_size = 4,
   }
 
   # Color palette
-  if(colorblind) palette <- c(palettes$colorblind_1[4], palettes$colorblind_1[1]) else palette <- c("red", "blue")
+  if(colorblind) palette <- c(palettes$colorblind_1[1], palettes$colorblind_1[4]) else palette <- c("blue", "red")
 
   plot <- ggplot(cor_plot_data, aes(x = Var1, y = Var2, fill = value)) +
     geom_tile() + 
+    scale_x_discrete(position = "top") + 
     scale_y_discrete(limits = rev(levels(cor_plot_data$Var2))) + 
     scale_fill_gradient2(low = palette[1], high = palette[2], midpoint = 0, limit = c(-1,1), name = "r") + 
     theme(
       axis.title.x = element_blank(),
       axis.title.y = element_blank(),
+      axis.text.x = element_text(angle = label_rotation, vjust = 0.5, hjust = 1),
       axis.ticks = element_blank(),
       panel.grid = element_blank(),
       panel.background = element_blank(),
@@ -107,6 +124,10 @@ cor_plot <- function(data, x, y = NULL, digits = 3, digit_size = 4,
 
   plot <- plot +
     geom_text(aes(Var1, Var2, label = labels), color = "black", size = digit_size)
+  
+  if(!is.null(title)) plot <- plot + 
+    ggtitle(title) + 
+    theme(plot.title = element_text(hjust = 0.5, margin = margin(0,0,10,0))) # Centering + Bottom margin
 
   print(plot)
   

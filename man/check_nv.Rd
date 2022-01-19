@@ -9,7 +9,7 @@ check_nv(
   data,
   outliers = FALSE,
   ID = NULL,
-  exclude_outliers_in_plot = FALSE,
+  exclude_outliers = FALSE,
   plot = TRUE,
   max_val = NULL,
   colorblind = F
@@ -24,7 +24,7 @@ check_nv(
 
 \item{ID}{Column by which outliers should be identified. Function will return a vector consisting of the IDs of the outliers.}
 
-\item{exclude_outliers_in_plot}{Whether outliers should be removed prior to plotting the distribution of the variable.}
+\item{exclude_outliers}{Whether outliers should be removed prior to plotting the distribution of the variable.}
 
 \item{plot}{Whether ND should be plotted}
 
