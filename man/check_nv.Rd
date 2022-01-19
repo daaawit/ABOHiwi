@@ -4,18 +4,34 @@
 \alias{check_nv}
 \title{Check normal distribution of Likert-scale type item}
 \usage{
-check_nv(var, dat, outliers = FALSE, ID = NULL, plot = T)
+check_nv(
+  var,
+  data,
+  outliers = FALSE,
+  ID = NULL,
+  exclude_outliers_in_plot = FALSE,
+  plot = TRUE,
+  max_val = NULL,
+  colorblind = F
+)
 }
 \arguments{
 \item{var}{Variable to check, supplied as a string}
 
-\item{dat}{Dataframe from which the variable stems}
+\item{data}{Dataframe from which the variable stems}
 
-\item{outliers}{Whether function should return the outliers}
+\item{outliers}{Whether function should check for outliers. If true, will return outlier values.}
 
-\item{ID}{Column by which outliers should be identified}
+\item{ID}{Column by which outliers should be identified. Function will return a vector consisting of the IDs of the outliers.}
+
+\item{exclude_outliers_in_plot}{Whether outliers should be removed prior to plotting the distribution of the variable.}
 
 \item{plot}{Whether ND should be plotted}
+
+\item{max_val}{Maximum value of the item being analyzed (optional). If not supplied, the x axis will scale automatically. If supplied,
+the x axis will scale between 0 and max_val. Only used for plotting.}
+
+\item{colorblind}{Optional change of colors in the plot. using the colorblind_1 palette from this package. Only used for plotting.}
 }
 \description{
 Check normal distribution of variables detecting whether there are

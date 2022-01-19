@@ -5,9 +5,9 @@
 \title{Plot correlations as a heatmap with significance stars and confidence intervals}
 \usage{
 cor_plot(
+  data,
   x,
   y = NULL,
-  data,
   digits = 3,
   digit_size = 4,
   significance = T,
@@ -20,12 +20,12 @@ cor_plot(
 )
 }
 \arguments{
+\item{data}{The dataframe from which the data will be sampled}
+
 \item{x}{Independent variables, provided as a vector containing variable names as strings, e.g. c("iv1", "iv2", "iv3").}
 
 \item{y}{Dependent variables, optional. Also provided as a vector. If no y values are specified, the function uses the x values for both
 the x and y axis.}
-
-\item{data}{The dataframe from which the data will be sampled}
 
 \item{digits}{How many digits should be shown in the plot. Defaults to 3.}
 
