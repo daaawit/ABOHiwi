@@ -14,13 +14,13 @@ cor_plot(
   digit_size = 4,
   significance = T,
   sign_levels = list(`.001` = "***", `.01` = "**", `.05` = "*", `.1` = "."),
+  return_significant_only = F,
   CI = T,
-  conf_level = 0.95,
+  CI_conf_level = 0.95,
   plot_CI = T,
   colorblind = F,
   title = NULL,
-  label_rotation = 0,
-  return_plot = F
+  label_rotation = 0
 )
 }
 \arguments{
@@ -50,9 +50,13 @@ Will be implemented in the future as an optional parameter.}
 as strings and can have a leading zero (but don't have to), i.e. can be in form of e.g. ".001" or "0.001". Significance signs must
 also be provided as strings. Defaults to .001 = three stars, .01 = two stars, .05 = one star}
 
+\item{return_significant_only}{Whether the returned values (table, not the plot) should only contain the correlations that are significant. Defaults 
+to FALSE. If set to TRUE, will return any correlation with a p value smaller than the largest supplied significance level. For example, if sign_levels is not modified,
+any correlation with p < .1 will be returned. Only works if significance is set to TRUE.}
+
 \item{CI}{Whether the CI for each correlation should be reported in the table. Defaults to TRUE.}
 
-\item{conf_level}{Confidence level used for the CI. Defaults to 0.95.}
+\item{CI_conf_level}{Confidence level used for the CI. Defaults to 0.95.}
 
 \item{plot_CI}{Whether the CI should be included below the correlation within the plot.}
 
@@ -62,9 +66,6 @@ colorblind_1 in this package if TRUE.}
 \item{title}{Title that should be added to the plot. If not specified, title will be omitted.}
 
 \item{label_rotation}{How many degrees the label on the x axis (corresponds to the values specified as 'y' if y != NULL) should be rotated.}
-
-\item{return_plot}{Whether plot should be returned as an object. If FALSE, plot will be printed
-but not saved. If TRUE, function will return a list containing the correlation table and the ggplot data as elements.}
 }
 \value{
 Returns the correlation table and plots it as a heatmap. If return_plot is TRUE, also returns the ggplot object as a list element
