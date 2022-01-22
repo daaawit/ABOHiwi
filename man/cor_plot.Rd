@@ -20,7 +20,8 @@ cor_plot(
   plot_CI = T,
   colorblind = F,
   title = NULL,
-  label_rotation = 0
+  label_rotation = 0,
+  return_plot = F
 )
 }
 \arguments{
@@ -66,6 +67,9 @@ colorblind_1 in this package if TRUE.}
 \item{title}{Title that should be added to the plot. If not specified, title will be omitted.}
 
 \item{label_rotation}{How many degrees the label on the x axis (corresponds to the values specified as 'y' if y != NULL) should be rotated.}
+
+\item{return_plot}{Whether the plot should be returned. If TRUE, return value will be a list containing the table and the plot, the plot will not be printed. #
+Can e.g. be used to pass the plot to plotly, which is helpful for large tables.}
 }
 \value{
 Returns the correlation table and plots it as a heatmap. If return_plot is TRUE, also returns the ggplot object as a list element

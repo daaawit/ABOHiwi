@@ -41,6 +41,8 @@
 #' colorblind_1 in this package if TRUE.
 #' @param title Title that should be added to the plot. If not specified, title will be omitted.
 #' @param label_rotation How many degrees the label on the x axis (corresponds to the values specified as 'y' if y != NULL) should be rotated.
+#' @param return_plot Whether the plot should be returned. If TRUE, return value will be a list containing the table and the plot, the plot will not be printed. #
+#' Can e.g. be used to pass the plot to plotly, which is helpful for large tables.
 #'  
 #' @return Returns the correlation table and plots it as a heatmap. If return_plot is TRUE, also returns the ggplot object as a list element
 #' together with the correlation table. Can be called using print(object$cor_plot)
@@ -50,7 +52,7 @@
 cor_plot <- function(data, x, y = NULL, use = "complete.obs", method = "pearson", digits = 3, digit_size = 4,
                      significance = T, sign_levels = list(".001" = "***", ".01" = "**", ".05" = "*", ".1" = "."), return_significant_only = F,
                      CI = T, CI_conf_level = 0.95, plot_CI = T,
-                     colorblind = F, title = NULL, label_rotation = 0){
+                     colorblind = F, title = NULL, label_rotation = 0, return_plot = F){
   
   n <- nrow(data)
   
@@ -127,8 +129,6 @@ cor_plot <- function(data, x, y = NULL, use = "complete.obs", method = "pearson"
   if(!is.null(title)) plot <- plot + 
     ggtitle(title) + 
     theme(plot.title = element_text(hjust = 0.5, margin = margin(0,0,10,0))) # Centering + Bottom margin
-
-  print(plot)
   
   # Rename before exporting
   if(!is.null(y)) colnames(cor_plot_data)[1:3] <- c("IV", "DV", "r") else colnames(cor_plot_data)[1:3] <- c("Var1", "Var2", "r")
@@ -142,5 +142,10 @@ cor_plot <- function(data, x, y = NULL, use = "complete.obs", method = "pearson"
     }
   }
   
-  return(cor_plot_data)
+  if(return_plot){
+    return(list(cor_table = cor_plot_data, cor_plot = plot))
+  } else {
+    print(plot)
+    return(cor_plot_data)
+  } 
 }
