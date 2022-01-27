@@ -33,7 +33,7 @@ plot_dist <- function(var, data, max_val = NULL, title = "", colorblind = F){
     geom_vline(aes(xintercept = median(pull(data, var = var), na.rm = T), color = "Median")) +
 
     scale_color_manual(values = c(palette[2], palette[3])) +
-    scale_x_continuous(breaks = seq(1, max_val, by = 1)) + # Step size of 1 on x axis
+    scale_x_continuous(breaks = seq(1, max_val, by = 1), limits = c(1, max_val)) + # Step size of 1 on x axis
   
     xlab("") +
     ylab("") +
@@ -43,4 +43,3 @@ plot_dist <- function(var, data, max_val = NULL, title = "", colorblind = F){
   
   print(plot)
 }
-
