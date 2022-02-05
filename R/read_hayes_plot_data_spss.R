@@ -50,7 +50,7 @@ read_hayes_plot_data_spss <- function(path){
   plot_data <- gsub(",", ".", plot_data) # Replace , with . for conversion to numeric
   plot_data <- read.csv(text = plot_data, sep = ";") # Convert to df 
   plot_data <- plot_data[-c(1),] # Remove BEGIN   DATA.
-  plot_data[,4] <- NULL # Remove last column, consisting of "."
+  plot_data[,ncol(plot_data)] <- NULL # Remove last column, consisting of "."
   plot_data <- data.frame(sapply(plot_data, function(x) as.numeric(x)))
   
   ##### Significance data ##### 
