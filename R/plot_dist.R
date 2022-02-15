@@ -13,11 +13,16 @@
 #' @param colorblind Optional change of colors using the colorblind_1 palette from this package.
 #'
 #' @return Plot of response pattern for the item
+#' 
+#' @export
 
 plot_dist <- function(var, data, max_val = NULL, title = "", colorblind = F){
 
   palette <-  if(colorblind) c(palettes$colorblind_1[8], palettes$colorblind_1[4], palettes$colorblind_1[1]) else c("grey", "blue", "red")
-  if(is.null(max_val)) max_val <- max(pull(data, var))
+  if(is.null(max_val)){
+    max_val <- max(pull(data, var))
+    min_val <- min(pull(data, var))
+  } else min_val <- 1
   
   max_density <- max(density(pull(data, var))$y)
   width <- 0.1 * max_density

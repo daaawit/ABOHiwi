@@ -1,4 +1,4 @@
-#' Plot interactions generated using Process Hayes.
+#' Plot interactions generated using Process Hayes Model 1.
 #' 
 #' @import ggplot2
 #' @importFrom dplyr pull
@@ -18,11 +18,13 @@
 #' @param colorblind Whether colorblind-safe colors should be used. If true, uses colors from the colorblind_1 palette in this package.
 #' @param APA Whether black and white colors should be used.
 #' 
+#' @returns A GGPlot object.
+#' 
 #' @export
 
 hayes_plot_model_1 <- function(hayes_data, title = NULL, xlab = NULL, ylab = NULL, legend_title = NULL, SD = F, colorblind = F, APA = F){
   if (class(hayes_data) != "HayesData") stop("Object must be of type HayesData.")
-  if (hayes_data$model_description["Model",] != 1) stop("Can only visualize model 1 right now.")
+  if (hayes_data$model_description["Model",] != 1) stop("Function used for visualizing model 1 interactions.")
   
   x_name <- hayes_data$model_description["X",]
   y_name <- hayes_data$model_description["Y",]
@@ -57,15 +59,13 @@ hayes_plot_model_1 <- function(hayes_data, title = NULL, xlab = NULL, ylab = NUL
   }
   
   if(!is.null(title)) plot <- plot + ggtitle(title)
+  if(!is.null(xlab)) plot <- plot + xlab(xlab) else plot <- plot + xlab(x_name)
+  if(!is.null(ylab)) plot <- plot + ylab(ylab) else plot <- plot + ylab(y_name)
+  if(is.null(legend_title)) legend_title <- w_name
   
-  if(!is.null(xlab)) plot <- plot + xlab(xlab) else plot <- plot + xlab("")
-  if(!is.null(ylab)) plot <- plot + ylab(ylab) else plot <- plot + ylab("")
-  
-  if(!is.null(legend_title)){
-    plot <- plot + 
-      labs(fill = legend_title) + 
-      theme_apa(legend.use.title = T)
-  } else plot <- plot + theme_apa()
+  plot <- plot + 
+    labs(fill = legend_title) + 
+    theme_apa(legend.use.title = T)
     
-  print(plot)
+  return(plot)
 }
