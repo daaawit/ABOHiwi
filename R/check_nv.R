@@ -17,17 +17,18 @@
 #' @param ID Column by which outliers should be identified. Function will return a vector consisting of the IDs of the outliers.
 #' @param exclude_outliers Whether outliers should be removed prior to plotting the distribution of the variable.
 #' @param plot Whether ND should be plotted
+#' @param title Custom title for the plot. If title = NULL (default), variable name will be displayed 
 #' @param max_val Maximum value of the item being analyzed (optional). If not supplied, the x axis will scale automatically. If supplied,
 #' the x axis will scale between 0 and max_val. Only used for plotting.
 #' @param colorblind Optional change of colors in the plot. using the colorblind_1 palette from this package. Only used for plotting.
 #'
 #' @export
 
-check_nv <- function(var, data, outliers = FALSE, ID = NULL, exclude_outliers = FALSE, plot = TRUE, max_val = NULL, colorblind = F){
+check_nv <- function(var, data, outliers = FALSE, ID = NULL, exclude_outliers = FALSE, plot = TRUE, title = NULL, max_val = NULL, colorblind = F){
 
   var_vals <- as.numeric(pull(data, var = var))
 
-  title <- var
+  if(plot & is.null(title)) title <- var
 
   if(outliers){
     if(is.null(ID)){

@@ -11,6 +11,8 @@
 #' 
 #' @returns A list of class HayesData consisting of the plot_data for visualizing the interaction as well as the various significance 
 #' measures from the Hayes SPSS output as well as the model description.
+#' 
+#' @export
 
 read_hayes_plot_data <- function(hayes_data){
   if (class(hayes_data) == data.frame) read_hayes_plot_data_R(hayes_data)
