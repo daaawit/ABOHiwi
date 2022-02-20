@@ -11,8 +11,8 @@ check_nv(
   ID = NULL,
   exclude_outliers = FALSE,
   plot = TRUE,
-  max_val = NULL,
-  colorblind = F
+  title = NULL,
+  ...
 )
 }
 \arguments{
@@ -28,10 +28,9 @@ check_nv(
 
 \item{plot}{Whether ND should be plotted}
 
-\item{max_val}{Maximum value of the item being analyzed (optional). If not supplied, the x axis will scale automatically. If supplied,
-the x axis will scale between 0 and max_val. Only used for plotting.}
+\item{title}{Title. Used for plotting as well as for printing out test statistics. Defaults to variable name if not set.}
 
-\item{colorblind}{Optional change of colors in the plot. using the colorblind_1 palette from this package. Only used for plotting.}
+\item{...}{Arguments to pass to `plot_dist` for plotting of distribution}
 }
 \description{
 Check normal distribution of variables detecting whether there are

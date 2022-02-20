@@ -14,7 +14,7 @@ check_outliers <- function(var_vals, ID, data){
   outs <- pull(filter(data, var_vals %in% boxplot.stats(var_vals)$out), ID)
 
   if(length(outs != 0)){
-    print(sprintf("Found outlier values: %s", paste(outs, collapse = " ")))
+    print(sprintf("Outliers: %s", paste(outs, collapse = " ")))
     return(as.vector(outs))
   } else {
     print("No outliers removed")

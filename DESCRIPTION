@@ -1,7 +1,7 @@
 Package: ABOHiwi
 Type: Package
 Title: ABO Hiwi Funktionen
-Version: 0.1.1
+Version: 0.1.2
 Author: David Schischke
 Maintainer: David Schischke <s1ddschi@uni-trier.de>
 Description: Funktionen, die für Auswertungen von klassischen ABO-Datensätzen relevant sind.

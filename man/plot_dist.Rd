@@ -4,7 +4,16 @@
 \alias{plot_dist}
 \title{Plot distribution of Likert-scale type item}
 \usage{
-plot_dist(var, data, max_val = NULL, title = "", colorblind = F)
+plot_dist(
+  var,
+  data,
+  max_val = NULL,
+  title = "",
+  colorblind = F,
+  density = T,
+  binwidth = 0.5,
+  return = F
+)
 }
 \arguments{
 \item{var}{Variable to plot}
@@ -17,6 +26,12 @@ the x axis will scale between 0 and max_val.}
 \item{title}{Title for the plot, optional}
 
 \item{colorblind}{Optional change of colors using the colorblind_1 palette from this package.}
+
+\item{density}{Whether density curve should be plotted. Helpful to deactivate for single-item analysis.}
+
+\item{binwidth}{Width of bins. Should be left at 0.5 for Likert-Scale items (aggregated) or set to 1 for single-item analysis.}
+
+\item{return}{If set to true, returns the plot instead of printing it. Use if you want to arrange multiple plots e.g. using `ggarrange`.}
 }
 \value{
 Plot of response pattern for the item
