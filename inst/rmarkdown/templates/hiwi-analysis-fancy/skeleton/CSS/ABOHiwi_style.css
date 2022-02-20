@@ -1,0 +1,67 @@
+:root{
+  --sidenav-width: calc(100% / 6);
+  --main-color: #3c4752;
+  --darker-main-color: #252d35;
+  --transition-darkmode: 0.5s ease-in-out;
+}
+  
+/* Style page content */
+.main {
+  padding-left: var(--sidenav-width);
+  margin-left: 1rem;
+  background-color: var(--main-color);
+}
+
+/* Light Mode */
+
+body {
+    background-color: #FFF;
+    transition: var(--transition-darkmode);
+  }
+  
+/* Dark Mode */
+
+.dark-mode {
+  background-color: var(--main-color);
+  transition: var(--transition-darkmode);
+  color: white;
+}
+
+.dark-mode pre{
+  /* Textboxen Output */ 
+  background-color: var(--darker-main-color);
+  color: white;
+}
+
+
+
+#darkmode-button{
+    position: fixed;
+    bottom: 1em;
+    right: 1em; 
+    border-radius: 50%;
+    border: none;
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 25px;
+}
+
+.light-mode #darkmode-button{
+  background-color: var(--main-color);
+  color: #FFF;
+  transition: var(--transition-darkmode);
+}
+
+.light-mode #darkmode-button:hover{
+  background-color: var(--darker-main-color);
+}
+
+.dark-mode #darkmode-button{
+  background-color: #FFF;
+  color: var(--main-color);
+  transition: var(--transition-darkmode);
+}
+
+.dark-mode #darkmode-button:hover{
+  color: var(--darker-main-color);
+}

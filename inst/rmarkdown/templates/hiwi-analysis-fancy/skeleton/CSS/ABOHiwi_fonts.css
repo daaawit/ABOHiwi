@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+/* General */
+body{
+    font-family: Roboto, "Arial", Helvetica, sans-serif;
+}
+
+/* Main Content*/ 
+
+h1{
+    font-size: 3rem;
+}
+
+h2{
+    font-size: 1.7rem;
+    font-weight: 500;
+    font-size: 1.7rem;
+}
+
+h3{
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-bottom: 0px;
+}
+
+p{
+    font-size:1.2em;
+}
+
+strong{
+    margin-top: 0px;
+    font-size: 1.3em;
+}
+
+ol li{
+    font-size: 1.2em;
+}
+
+/* Light mode */ 
+.light-mode{
+    color: var(--main-color);
+    transition: var(--transition-darkmode);
+}
+
+/* Dark mode */ 
+.dark-mode{
+    color: #FFF;
+    transition: var(--transition-darkmode);
+}
